@@ -49,12 +49,13 @@ export const userLogin = async (req, res) => {
             const checkPass = bcrypt.compareSync(password, existingUser.password);
             if (checkPass) {
 
-                jwt.sign({ email: existingUser.email, id: existingUser._id }, jwtSecret, {}, (err, token) => {
+                jwt.sign({
+                    email: existingUser.email,
+                    id: existingUser._id,
+                }, jwtSecret, {}, (err, token) => {
                     if (err) throw err;
-
                     res.cookie("token", token).json({
-                        success: true,
-                        message: "login success",
+                        existingUser
                     });
                 })
 
@@ -78,5 +79,19 @@ export const userLogin = async (req, res) => {
             message: "Error in Registeration",
             err,
         });
+    }
+}
+
+export const profile = async (req, res) => {
+    const { token } = req.cookies;
+    if (token) {
+        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+            if (err) throw err;
+            const { name, email, _id } = await User.findById(userData.id)
+            res.json({ name, email, _id });
+
+        })
+    } else {
+        res.json(null);
     }
 }
