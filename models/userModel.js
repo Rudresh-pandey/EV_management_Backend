@@ -13,6 +13,24 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         require: true,
+    },
+    bio: {
+        type: String
+    },
+    github: {
+        type: String,
+    }
+    ,
+    linkedin: {
+        type: String,
+    }
+    ,
+    twitter: {
+        type: String,
+    }
+    ,
+    website: {
+        type: String,
     }
 });
 

@@ -87,11 +87,24 @@ export const profile = async (req, res) => {
     if (token) {
         jwt.verify(token, jwtSecret, {}, async (err, userData) => {
             if (err) throw err;
-            const { name, email, _id } = await User.findById(userData.id)
-            res.json({ name, email, _id });
+            const { name, email, _id, github, bio, twitter, website, linkedin } = await User.findById(userData.id)
+            // const founduser = await User.findById(userData.id)
+            // res.json(founduser);
+            res.json({ name, email, _id, github, bio, twitter, website, linkedin })
 
         })
     } else {
         res.json(null);
     }
+}
+
+export const userDetail = async (req, res) => {
+    const { id, glink, tlink, wlink, llink } = req.body;
+    const updateUser = await User.findByIdAndUpdate(id, {
+        github: glink,
+        linkedin: llink,
+        twitter: tlink,
+        website: wlink,
+    });
+    res.json(updateUser);
 }
