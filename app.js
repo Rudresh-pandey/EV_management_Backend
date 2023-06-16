@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
-import { profile, userDetail, userLogin, userRegister } from "./controller/userController.js";
+import { profile, userDetail, userLogin, userLogout, userRegister } from "./controller/userController.js";
 
 import cors from "cors";
 const app = express();
@@ -17,9 +17,10 @@ dotenv.config();
 connectDB();
 
 app.post("/register", userRegister);
-app.post("/login", userLogin)
-app.get("/profile", profile)
-app.post("/account/edit", userDetail)
+app.post("/login", userLogin);
+app.get("/profile", profile);
+app.post("/account/edit", userDetail);
+app.post("/logout", userLogout);
 
 app.listen(process.env.PORT, () => {
     console.log(`on port ${process.env.PORT}`)

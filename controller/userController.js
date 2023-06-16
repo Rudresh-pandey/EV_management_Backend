@@ -58,7 +58,7 @@ export const userLogin = async (req, res) => {
                         existingUser
                     });
                 })
-
+                // console.log(existingUser)
             } else {
                 res.status(401).json({
                     success: false,
@@ -107,4 +107,8 @@ export const userDetail = async (req, res) => {
         website: wlink,
     });
     res.json(updateUser);
+}
+
+export const userLogout = async (req, res) => {
+    res.cookie('token', '').json(true);
 }
