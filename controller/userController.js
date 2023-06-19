@@ -1,4 +1,5 @@
 import User from "../models/userModel.js"
+import Event from "../models/eventModel.js"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -111,4 +112,30 @@ export const userDetail = async (req, res) => {
 
 export const userLogout = async (req, res) => {
     res.cookie('token', '').json(true);
+}
+
+export const newCreatedEvent = async (req, res) => {
+    const { token } = req.cookies;
+    const {
+        title, location, description, eventType, eventMode, requirement, startDate, endDate, price
+    } = req.body;
+
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        if (err) throw err;
+        const eventDoc = await Event.create({
+            owner: userData.id,
+            title,
+            location,
+            description,
+            eventType,
+            eventMode,
+            requirement,
+            startDate,
+            endDate,
+            price,
+        })
+
+        res.json(eventDoc);
+
+    })
 }
