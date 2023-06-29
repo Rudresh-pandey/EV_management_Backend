@@ -32,6 +32,12 @@ const userSchema = mongoose.Schema({
     website: {
         type: String,
     }
+    , invest: [
+        {
+            name: String,
+            amount: Number,
+        },
+    ]
 });
 
 export default mongoose.model("User", userSchema);

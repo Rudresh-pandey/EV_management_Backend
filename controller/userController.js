@@ -139,3 +139,23 @@ export const newCreatedEvent = async (req, res) => {
 
     })
 }
+
+
+export const newEvent = async (req, res) => {
+    const { token } = req.cookies;
+
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        const { id } = userData;
+        res.json(await Event.find({ owner: id }))
+    })
+}
+
+export const Events = async (req, res) => {
+    res.json(await Event.find());
+}
+
+export const EventDetail = async (req, res) => {
+    // console.log(req.params.eventid);
+    const event = await Event.findOne({ _id: req.params.eventid });
+    res.json(event);
+}
