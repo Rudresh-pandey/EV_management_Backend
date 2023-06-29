@@ -117,7 +117,7 @@ export const userLogout = async (req, res) => {
 export const newCreatedEvent = async (req, res) => {
     const { token } = req.cookies;
     const {
-        title, location, description, eventType, eventMode, requirement, startDate, endDate, price
+        title, location, description, eventType, eventMode, requirements, startDate, endDate, price
     } = req.body;
 
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -129,7 +129,7 @@ export const newCreatedEvent = async (req, res) => {
             description,
             eventType,
             eventMode,
-            requirement,
+            requirements,
             startDate,
             endDate,
             price,
@@ -141,12 +141,25 @@ export const newCreatedEvent = async (req, res) => {
 }
 
 
+
+
 export const newEvent = async (req, res) => {
     const { token } = req.cookies;
 
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
         const { id } = userData;
         res.json(await Event.find({ owner: id }))
+    })
+}
+
+export const joinEvent = async (req, res) => {
+    const { token } = req.cookies;
+    const { event } = req.body;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        const { id } = userData;
+        const userEventUpdate = await User.findOneAndUpdate({ _id: id }, { $push: { eventsJoined: event } })
+        // console.log(eventId)
+        // res.json(userEventUpdate);
     })
 }
 

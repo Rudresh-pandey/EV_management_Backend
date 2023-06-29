@@ -32,12 +32,10 @@ const userSchema = mongoose.Schema({
     website: {
         type: String,
     }
-    , invest: [
-        {
-            name: String,
-            amount: Number,
-        },
-    ]
+    ,
+    eventsJoined: {
+        type: [String],
+    }
 });
 
 export default mongoose.model("User", userSchema);
