@@ -182,9 +182,3 @@ export const eventsJoined = async (req, res) => {
 }
 
 
-export const searchEventByName = async (req, res) => {
-    const eventName = req.body.eventName;
-    console.log(eventName)
-    const event = await Event.find({ title: eventName })
-    console.log(event);
-}
