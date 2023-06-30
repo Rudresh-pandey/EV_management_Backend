@@ -158,6 +158,7 @@ export const joinEvent = async (req, res) => {
     const { event } = req.body;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
         const { id } = userData;
+        await Event.findByIdAndUpdate(event, { $inc: { participants: 1 } })
         res.json(await Event.findByIdAndUpdate(event, { joinedUser: id }))
         // console.log(eventId)
         // res.json(userEventUpdate);
