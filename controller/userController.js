@@ -176,43 +176,15 @@ export const EventDetail = async (req, res) => {
 
 export const eventsJoined = async (req, res) => {
     const { token } = req.cookies;
-
-    // return new Promise((resolve, reject) => {
-    //     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-    //         const { eventsJoined } = await User.findById(userData.id);
-    //         const filterdEvents = eventsJoined.filter(function (ele, pos) {
-    //             return eventsJoined.indexOf(ele) === pos;
-    //         })
-    //         let Events = []
-    //         filterdEvents.map(async (eve) => {
-    //             const event = await Event.findOne({ _id: eve });
-    //             Events.push(event);
-    //         })
-
-    //         resolve(Events);
-
-    //     })
-    // })
-
-    // jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-    //     const { eventsJoined } = await User.findById(userData.id);
-    //     const filterdEvents = eventsJoined.filter(function (ele, pos) {
-    //         return eventsJoined.indexOf(ele) === pos;
-    //     })
-    //     let Events = []
-    //     filterdEvents.map(async (eve) => {
-    //         const event = await Event.findOne({ _id: eve });
-    //         Events.push(event);
-    //     })
-
-    //     res.json(Events);
-
-    // })
-    // jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-    //     const { eventsJoined } = await User.findById(userData.id);
-    //     res.json(eventsJoined);
-    // })
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
         res.json(await Event.find({ joinedUser: userData.id }));
     })
+}
+
+
+export const searchEventByName = async (req, res) => {
+    const eventName = req.body.eventName;
+    console.log(eventName)
+    const event = await Event.find({ title: eventName })
+    console.log(event);
 }
