@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
-import { EventDetail, Events, joinEvent, newCreatedEvent, newEvent, profile, userDetail, userLogin, userLogout, userRegister } from "./controller/userController.js";
+import { EventDetail, Events, eventsJoined, joinEvent, newCreatedEvent, newEvent, profile, userDetail, userLogin, userLogout, userRegister } from "./controller/userController.js";
 
 import cors from "cors";
 const app = express();
@@ -26,6 +26,7 @@ app.post('/joinEvent', joinEvent)
 app.get('/eventscreated', newEvent)
 app.get('/events', Events)
 app.get('/events/:eventid', EventDetail)
+app.get('/eventsjoined', eventsJoined)
 
 app.listen(process.env.PORT, () => {
     console.log(`on port ${process.env.PORT}`)

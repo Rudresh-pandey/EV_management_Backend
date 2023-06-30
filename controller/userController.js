@@ -157,7 +157,7 @@ export const joinEvent = async (req, res) => {
     const { event } = req.body;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
         const { id } = userData;
-        const userEventUpdate = await User.findOneAndUpdate({ _id: id }, { $push: { eventsJoined: event } })
+        res.json(await Event.findByIdAndUpdate(event, { joinedUser: id }))
         // console.log(eventId)
         // res.json(userEventUpdate);
     })
@@ -171,4 +171,47 @@ export const EventDetail = async (req, res) => {
     // console.log(req.params.eventid);
     const event = await Event.findOne({ _id: req.params.eventid });
     res.json(event);
+}
+
+export const eventsJoined = async (req, res) => {
+    const { token } = req.cookies;
+
+    // return new Promise((resolve, reject) => {
+    //     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+    //         const { eventsJoined } = await User.findById(userData.id);
+    //         const filterdEvents = eventsJoined.filter(function (ele, pos) {
+    //             return eventsJoined.indexOf(ele) === pos;
+    //         })
+    //         let Events = []
+    //         filterdEvents.map(async (eve) => {
+    //             const event = await Event.findOne({ _id: eve });
+    //             Events.push(event);
+    //         })
+
+    //         resolve(Events);
+
+    //     })
+    // })
+
+    // jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+    //     const { eventsJoined } = await User.findById(userData.id);
+    //     const filterdEvents = eventsJoined.filter(function (ele, pos) {
+    //         return eventsJoined.indexOf(ele) === pos;
+    //     })
+    //     let Events = []
+    //     filterdEvents.map(async (eve) => {
+    //         const event = await Event.findOne({ _id: eve });
+    //         Events.push(event);
+    //     })
+
+    //     res.json(Events);
+
+    // })
+    // jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+    //     const { eventsJoined } = await User.findById(userData.id);
+    //     res.json(eventsJoined);
+    // })
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        res.json(await Event.find({ joinedUser: userData.id }));
+    })
 }

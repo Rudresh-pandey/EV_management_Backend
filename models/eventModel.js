@@ -17,6 +17,7 @@ const eventSchema = new mongoose.Schema({
     requirements: String,
     participants: Number,
     guests: [Object],
+    joinedUser: { type: mongoose.Schema.Types.ObjectId },
 
 })
 

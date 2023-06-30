@@ -32,10 +32,8 @@ const userSchema = mongoose.Schema({
     website: {
         type: String,
     }
-    ,
-    eventsJoined: {
-        type: [String],
-    }
+
+    // eventsJoined: [mongoose.Schema.Types.ObjectId]
 });
 
 export default mongoose.model("User", userSchema);
