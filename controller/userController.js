@@ -117,7 +117,7 @@ export const userLogout = async (req, res) => {
 export const newCreatedEvent = async (req, res) => {
     const { token } = req.cookies;
     const {
-        title, location, description, eventType, eventMode, requirements, startDate, endDate, price
+        title, location, description, eventType, eventMode, requirements, startDate, endDate, price, organizer
     } = req.body;
 
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -133,6 +133,7 @@ export const newCreatedEvent = async (req, res) => {
             startDate,
             endDate,
             price,
+            organizer,
         })
 
         res.json(eventDoc);
