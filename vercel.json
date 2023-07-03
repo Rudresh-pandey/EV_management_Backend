@@ -1,8 +1,7 @@
 {
     "builds": [
         {
-            "src": "*.js",
-            "user": "@vercel/node"
+            "src": "*.js"
         }
     ],
     "routes": [
